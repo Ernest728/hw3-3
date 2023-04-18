@@ -7,7 +7,7 @@ s = serial.Serial(serdev)
 x = []
 y = []
 z = []
-t = np.arange(0,1.27,0.01)
+t = np.arange(0,2.54,0.02)
 s.write(b'1')
 time.sleep(10)
 for i in range(0, 127):
