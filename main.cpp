@@ -18,24 +18,22 @@ Thread thread2;
 
 void print(void) {
     while (1) {
-    char buf2[MAXIMUM_BUFFER_SIZE];
-    acc.GetAcceleromterSensor(XYZ);
-    if (serial_port.readable()) {
-      serial_port.read(buf2, 1);
-
-      if (buf2[0] == '1') {
-        acc.GetAcceleromterCalibratedData(XYZ);
-        printf("%f\n", XYZ[0]);
-      } else if (buf2[0] == '2') {
-        acc.GetAcceleromterCalibratedData(XYZ);
-        printf("%f\n", XYZ[1]);
-      } else if (buf2[0] == '3') {
-        acc.GetAcceleromterCalibratedData(XYZ);
-        printf("%f\n", XYZ[2]);
-      } else {}
+        if (serial_port.readable()) {
+            char buf2[MAXIMUM_BUFFER_SIZE];
+            serial_port.read(buf2, 1);
+            if (buf2[0] == '1') {
+                for (int i = 0; i < 128; i++){
+                    char buf2[MAXIMUM_BUFFER_SIZE];
+                    acc.GetAcceleromterSensor(XYZ);
+                    acc.GetAcceleromterCalibratedData(XYZ);
+                    printf("%f\n", XYZ[0]);
+                    printf("%f\n", XYZ[1]);
+                    printf("%f\n", XYZ[2]);
+                    ThisThread::sleep_for(20ms);
+                }
+            }
+        }
     }
-    ThisThread::sleep_for(20ms);
-  }
 }
 
 int main() {
